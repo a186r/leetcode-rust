@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 /**
  * [1] Two Sum
  *
@@ -16,22 +18,64 @@
  * return [0, 1].
  *
  */
-pub struct Solution;
 
-use std::collections::HashMap;
+// 遍历列表，通过Hash表记录元素位置，如果target-元素 值存在于列表中，则直接返回两个元素的位置
+//pub struct Solution;
+//
+//use std::collections::HashMap;
+//
+//impl Solution {
+//    pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32>{
+////        声明map，分配空间
+//        let mut map = HashMap::with_capacity(nums.len());
+//        for (index, num) in nums.iter().enumerate() {
+//            println!("当前数字和下标: {}-{}", index, num);
+//            match map.get(&(target - num)) {
+//                None => {
+//                    map.insert(num, index);
+//                },
+//                Some(sub_index) => {
+//                    println!("sub_index是什么: {}", sub_index);
+//                    return vec![*sub_index as i32, index as i32];
+//                },
+//            }
+//        }
+//        vec![]
+//    }
+//}
+//
+//#[cfg(test)]
+//mod tests{
+//    use super::*;
+//
+//    #[test]
+//    fn test_1(){
+//        assert_eq!(vec![0, 1], Solution::two_sum(vec![2, 3, 5, 8, 10], 5));
+////        assert_eq!(vec![1, 3], Solution::two_sum(vec![2, 3, 5, 8, 10], 11));
+//    }
+//}
+
+pub struct Solution;
 
 impl Solution {
     pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32>{
-//        声明map，分配空间
+//        先声明一个map，并且将map大小初始化
         let mut map = HashMap::with_capacity(nums.len());
-        for (index, num) in nums.iter().enumerate() {
-            match map.get(&(target - num)) {
+//        遍历map
+        for (index, num) in nums.iter().enumerate(){
+//            get<Q: ?Sized>(&self, k: &Q)  这里get里面的参数必须是借用
+            println!("index 和 num : {}-{}", index, num);
+            match map.get(&(&target - num)) {
                 None => {
                     map.insert(num, index);
+                    println!("map.len={}", map.len());
                 },
+//                如果target-num正好匹配到一个下标，则直接返回index和sub_index
                 Some(sub_index) => return vec![*sub_index as i32, index as i32],
             }
+            println!("map中index 和 num: {}-{:?}", num, map.get(&num));
         }
+//        如果找不到匹配的结果直接返回一个空的数组
         vec![]
     }
 }
@@ -42,7 +86,6 @@ mod tests{
 
     #[test]
     fn test_1(){
-        assert_eq!(vec![0, 1], Solution::two_sum(vec![2, 3, 5, 8, 10], 5));
-        assert_eq!(vec![1, 3], Solution::two_sum(vec![2, 3, 5, 8, 10], 11));
+        assert_eq!(vec![3,4], Solution::two_sum(vec![1, 2, 3, 4, 5], 9));
     }
 }
