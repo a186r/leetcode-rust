@@ -55,6 +55,7 @@ use std::collections::HashMap;
 //    }
 //}
 
+// TODO:BTreeMap比HashMap节省内存，试一下BTreeMap的方案
 pub struct Solution;
 
 impl Solution {
