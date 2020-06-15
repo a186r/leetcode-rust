@@ -91,7 +91,6 @@
 //     }
 // }
 
-
 //给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
 //
 // 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
@@ -106,27 +105,53 @@
 //所以返回 [0, 1]
 //
 // Related Topics 数组 哈希表
+// 暴力解法，写出来就被pass掉，不能用，考察的是数组和哈希表
+// pub struct Solution;
+//
+// impl Solution {
+//     pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
+//         for i in 0..nums.len() {
+//             for j in i + 1..nums.len() {
+//                 if target == nums[i] + nums[j] {
+//                     return vec![i as i32, j as i32];
+//                 }
+//             }
+//         }
+//         vec![]
+//     }
+// }
+
+use std::collections::HashMap;
 pub struct Solution;
 
+// 解法一：分配数组，如果target-元素值存在于列表中，则返回在数组的位置。
 impl Solution {
     pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-        for i in 0..nums.len() {
-            for j in i+1..nums.len(){
-                if target == nums[i] + nums[j] {
-                    return vec![i as i32, j as i32]
+        //     声明一个可变大小的map，并且将map大小初始化
+        let mut map = HashMap::with_capacity(nums.len());
+        //     遍历map
+        for (index, num) in nums.iter().enumerate() {
+            println!("index 和 num: {}-{}", index, num);
+            match map.get(&(&target - num)) {
+                None => {
+                    map.insert(num, index);
+                    println!("map.len = {}", map.len());
                 }
+                // 如果target-num正好匹配到下一个下标，则直接返回index和subindex
+                Some(sub_index) => return vec![*sub_index as i32, index as i32],
             }
+            println!("map中index和num: {}-{:?}", num, map.get(&num));
         }
         vec![]
     }
 }
 
 #[cfg(test)]
-mod tests{
+mod tests {
     use super::*;
 
     #[test]
-    fn test_1(){
+    fn test() {
         assert_eq!(vec![3, 4], Solution::two_sum(vec![1, 2, 3, 4, 5], 9));
     }
 }
