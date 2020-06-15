@@ -127,6 +127,6 @@ mod tests{
 
     #[test]
     fn test_1(){
-        assert_eq!(vec![3,4], Solution::two_sum(vec![1, 2, 3, 4, 5], 9));
+        assert_eq!(vec![3, 4], Solution::two_sum(vec![1, 2, 3, 4, 5], 9));
     }
 }
